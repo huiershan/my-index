@@ -1,3 +1,4 @@
+/* 全局重置 */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -5,96 +6,286 @@
 }
 
 body {
-    font-family: "Microsoft YaHei", sans-serif;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+    /* 基础背景色，作为动画背景的底色 */
+    background-color: #fdfbf7; 
     padding: 20px;
     min-height: 100vh;
+    overflow-x: hidden; /* 防止动画溢出出现滚动条 */
+    position: relative;
 }
 
-.kitchen-container {
-    max-width: 800px;
-    margin: 0 auto;
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+/* --- 动态背景动画层 --- */
+.body-bg-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* 放在最底层 */
+    background: linear-gradient(135deg, #fff1eb 0%, #ace0f9 100%);
     overflow: hidden;
-    padding: 20px;
+}
+
+/* 浮动的气泡/蒸汽 */
+.bubble {
+    position: absolute;
+    bottom: -100px;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    animation: float Up 15s infinite ease-in;
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* 不同大小和速度的气泡 */
+.bubble:nth-child(1) { width: 40px; height: 40px; left: 10%; animation-duration: 8s; animation-delay: 0s; }
+.bubble:nth-child(2) { width: 20px; height: 20px; left: 20%; animation-duration: 12s; animation-delay: 2s; }
+.bubble:nth-child(3) { width: 50px; height: 50px; left: 35%; animation-duration: 10s; animation-delay: 4s; }
+.bubble:nth-child(4) { width: 80px; height: 80px; left: 50%; animation-duration: 18s; animation-delay: 1s; }
+.bubble:nth-child(5) { width: 35px; height: 35px; left: 65%; animation-duration: 15s; animation-delay: 3s; }
+.bubble:nth-child(6) { width: 45px; height: 45px; left: 80%; animation-duration: 11s; animation-delay: 5s; }
+.bubble:nth-child(7) { width: 25px; height: 25px; left: 90%; animation-duration: 14s; animation-delay: 2s; }
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 0;
+    }
+    20% {
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateY(-120vh) scale(1.2);
+        opacity: 0;
+    }
+}
+
+/* --- 主容器 --- */
+.kitchen-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.95); /* 轻微透明，透出一点背景 */
+    backdrop-filter: blur(10px); /* 毛玻璃效果 */
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    padding: 30px;
+    position: relative;
+    z-index: 1;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
 }
 
 header h1 {
     color: #d32f2f;
-    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
 }
 
+header p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+/* --- 菜单按钮区 --- */
 .menu {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 10px;
-    margin: 20px 0;
+    gap: 15px;
+    margin: 30px 0;
 }
 
 .menu button {
-    padding: 10px 20px;
-    background: #4caf50;
+    padding: 12px 25px;
+    background: linear-gradient(45deg, #4caf50, #45a049);
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 50px; /* 圆角按钮 */
     cursor: pointer;
     font-size: 16px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
+.menu button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 14px rgba(0,0,0,0.2);
+    background: linear-gradient(45deg, #45a049, #388e3c);
+}
+
+.menu button:active {
+    transform: translateY(1px);
+}
+
+/* --- 操作台区域 --- */
 .workbench {
     display: grid;
     grid-template-columns: 1fr 2fr;
-    gap: 20px;
-    margin: 20px 0;
+    gap: 25px;
+    margin: 30px 0;
+    background: rgba(255,255,255,0.6);
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid #eee;
 }
 
 .ingredients-bin {
-    background: #f0f0f0;
-    border: 2px dashed #ccc;
-    border-radius: 10px;
+    background: #fff;
+    border: 2px dashed #ffb74d;
+    border-radius: 12px;
     padding: 15px;
-    min-height: 150px;
+    min-height: 180px;
+    transition: all 0.3s;
+}
+
+.ingredients-bin:hover {
+    border-color: #ff9800;
+    background: #fffaf0;
 }
 
 .ingredients-bin .item {
     background: #fff;
-    padding: 10px;
-    margin: 5px 0;
-    border-radius: 5px;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 8px;
     cursor: grab;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.08);
     text-align: center;
+    font-weight: 500;
+    color: #555;
+    transition: transform 0.2s;
+    border-left: 4px solid #4caf50;
+}
+
+.ingredients-bin .item:hover {
+    transform: scale(1.05);
+    background: #f1f8e9;
+}
+
+.ingredients-bin .item:active {
+    cursor: grabbing;
 }
 
 .cooking-area {
     background: #fff8e1;
-    border: 2px solid #ffd54f;
-    border-radius: 10px;
+    border: 2px solid #ffe0b2;
+    border-radius: 12px;
     padding: 20px;
     min-height: 200px;
     text-align: center;
     color: #5d4037;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
 }
 
-.video-player {
-    margin: 20px 0;
-    text-align: center;
+.cooking-area p {
+    font-size: 1.1rem;
+    opacity: 0.7;
 }
 
+.cooking-area p:not(:first-child) {
+    margin-top: 10px;
+    font-size: 0.95rem;
+    opacity: 1;
+    animation: popIn 0.3s ease-out;
+}
+
+@keyframes popIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* --- 步骤说明 --- */
 .steps {
-    background: #f9f9f9;
-    padding: 15px;
-    border-radius: 5px;
-    font-size: 14px;
-    color: #333;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    font-size: 15px;
+    color: #444;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    border-left: 5px solid #2196f3;
 }
 
-/* 手机端适配 */
-@media (max-width: 600px) {
+.steps h3 {
+    margin-bottom: 10px;
+    color: #2196f3;
+}
+
+.steps ol {
+    padding-left: 20px;
+    line-height: 1.6;
+}
+
+/* --- 底部视频窗口 (重点修改) --- */
+.video-player {
+    margin-top: 40px;
+    background: #222; /* 深色背景像电视 */
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    border: 1px solid #444;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 视频窗口上方的装饰条 */
+.video-player::before {
+    content: "📺 烹饪教学频道";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(90deg, #d32f2f, #b71c1c);
+    color: white;
+    font-size: 12px;
+    padding: 5px 15px;
+    text-align: right;
+    border-bottom: 1px solid #888;
+}
+
+.video-player h3 {
+    color: #fff;
+    text-align: center;
+    margin: 15px 0 10px 0;
+    font-weight: normal;
+    opacity: 0.8;
+}
+
+.video-player iframe {
+    width: 100%;
+    aspect-ratio: 16 / 9; /* 保持16:9比例 */
+    border-radius: 8px;
+    border: none;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    background: #000;
+}
+
+/* --- 手机端适配 --- */
+@media (max-width: 768px) {
     .workbench {
         grid-template-columns: 1fr;
+    }
+    
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    .kitchen-container {
+        padding: 15px;
+    }
+    
+    .video-player::before {
+        font-size: 10px;
+        padding: 4px 10px;
     }
 }
