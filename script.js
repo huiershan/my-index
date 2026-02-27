@@ -78,7 +78,7 @@ class RecipeManager {
                     '加水煮开后放入豆腐',
                     '勾芡收汁，撒上花椒粉出锅'
                 ],
-                bvid: 'BV1xx411c7B8',
+                bvid: 'BV1Ut411e78m',
                 category: 'meat',
                 difficulty: { level: 'medium', text: '中等' },
                 cookTime: 25
@@ -93,7 +93,7 @@ class RecipeManager {
                     '待蛋白凝固后撒少许盐',
                     '煎至喜欢的熟度即可出锅'
                 ],
-                bvid: 'BV1XJ41157zR',
+                bvid: 'BV1p94y1n7My',
                 category: 'simple',
                 difficulty: { level: 'easy', text: '简单' },
                 cookTime: 10
@@ -108,7 +108,7 @@ class RecipeManager {
                     '下西红柿炒软出汁',
                     '倒入炒好的鸡蛋，调味翻炒均匀'
                 ],
-                bvid: 'BV1xK4y1C7mT',
+                bvid: 'BV1Py4y1S7EF',
                 category: 'vegetable',
                 difficulty: { level: 'easy', text: '简单' },
                 cookTime: 15
@@ -123,7 +123,7 @@ class RecipeManager {
                     '加调料和适量水',
                     '小火炖煮40分钟至软烂'
                 ],
-                bvid: 'BV1Js411V7hQ',
+                bvid: 'BV1MJ411t7pT',
                 category: 'meat',
                 difficulty: { level: 'medium', text: '中等' },
                 cookTime: 60
@@ -236,27 +236,23 @@ class RecipeManager {
         });
     }
 
-    // 创建菜谱卡片
-    createRecipeCard(recipe) {
-        const card = document.createElement('div');
-        card.className = 'recipe-card';
-        card.innerHTML = `
-            <div class="recipe-image">
-                <i class="fas ${this.getRecipeIcon(recipe.name)}"></i>
-            </div>
-            <div class="recipe-info">
-                <h3 class="recipe-title">${recipe.name}</h3>
-                <div class="recipe-meta">
-                    <span class="recipe-difficulty difficulty-${recipe.difficulty.level}">
-                        <i class="fas fa-signal"></i> ${recipe.difficulty.text}
-                    </span>
-                    <span><i class="fas fa-clock"></i> ${recipe.cookTime}分钟</span>
-                </div>
-            </div>
-        `;
+    // 根据菜名获取对应的食物图片
+    getRecipeImage(name) {
+        const imageMap = {
+            '麻婆豆腐': 'https://images.unsplash.com/photo-1607690450124-f9058898845d?w=400&h=200&fit=crop',
+            '煎鸡蛋': 'https://images.unsplash.com/photo-1603728034928-705f90a0a8d7?w=400&h=200&fit=crop',
+            '西红柿炒鸡蛋': 'https://images.unsplash.com/photo-1603728034928-705f90a0a8d7?w=400&h=200&fit=crop',
+            '红烧肉': 'https://images.unsplash.com/photo-1606471193077-7222d0f0c5c2?w=400&h=200&fit=crop',
+            '紫菜蛋花汤': 'https://images.unsplash.com/photo-1547592180-85f173990554?w=400&h=200&fit=crop',
+            '凉拌黄瓜': 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=200&fit=crop',
+            '鱼香茄子': 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=200&fit=crop',
+            '蛋炒饭': 'https://images.unsplash.com/photo-1603728034928-705f90a0a8d7?w=400&h=200&fit=crop',
+            '水煮鱼': 'https://images.unsplash.com/photo-1606471193077-7222d0f0c5c2?w=400&h=200&fit=crop',
+            '宫保鸡丁': 'https://images.unsplash.com/photo-1603728034928-705f90a0a8d7?w=400&h=200&fit=crop'
+        };
         
-        card.addEventListener('click', () => this.showRecipeDetail(recipe));
-        return card;
+        // 如果找不到特定图片，使用默认的美食图片
+        return imageMap[name] || 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=200&fit=crop';
     }
 
     // 根据菜名获取图标
@@ -267,13 +263,67 @@ class RecipeManager {
             '西红柿': 'fa-apple-alt',
             '肉': 'fa-drumstick-bite',
             '汤': 'fa-mug-hot',
-            '凉拌': 'fa-seedling'
+            '凉拌': 'fa-seedling',
+            '炒': 'fa-fire',
+            '煮': 'fa-water'
         };
         
         for (const [keyword, icon] of Object.entries(iconMap)) {
             if (name.includes(keyword)) return icon;
         }
         return 'fa-utensils';
+    }
+
+    // 创建菜谱卡片 - 增强版
+    createRecipeCard(recipe) {
+        const card = document.createElement('div');
+        card.className = 'recipe-card';
+        
+        // 获取对应的美食图片
+        const imageUrl = this.getRecipeImage(recipe.name);
+        
+        card.innerHTML = `
+            <div class="recipe-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('${imageUrl}')">
+                <div class="image-overlay">
+                    <i class="fas ${this.getRecipeIcon(recipe.name)} recipe-icon"></i>
+                    <div class="cook-effect">
+                        <span class="steam"> steam </span>
+                        <span class="bubble"> bubble </span>
+                    </div>
+                </div>
+                <div class="recipe-badge">
+                    <span class="difficulty-badge difficulty-${recipe.difficulty.level}">
+                        ${recipe.difficulty.text}
+                    </span>
+                </div>
+            </div>
+            <div class="recipe-info">
+                <h3 class="recipe-title">${recipe.name}</h3>
+                <div class="recipe-meta">
+                    <span class="recipe-time">
+                        <i class="fas fa-clock"></i> ${recipe.cookTime}分钟
+                    </span>
+                    <span class="recipe-likes">
+                        <i class="fas fa-heart"></i> ${Math.floor(Math.random() * 500 + 100)}
+                    </span>
+                </div>
+                <div class="recipe-description">
+                    经典家常菜，香气扑鼻，制作简单
+                </div>
+            </div>
+        `;
+        
+        // 添加悬停效果
+        card.addEventListener('mouseenter', () => {
+            card.querySelector('.recipe-image').style.transform = 'scale(1.05)';
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.querySelector('.recipe-image').style.transform = 'scale(1)';
+        });
+        
+        card.addEventListener('click', () => this.showRecipeDetail(recipe));
+        return card;
     }
 
     // 显示菜谱详情
@@ -313,18 +363,63 @@ class RecipeManager {
         this.currentRecipe = null;
     }
 
-    // 加载B站视频
+    // 加载B站视频 - 增强版
     loadVideo(bvid) {
         const container = document.getElementById('videoContainer');
+        
+        // B站视频嵌入配置
+        const videoConfig = {
+            bvid: bvid,
+            page: 1,
+            high_quality: 1,
+            danmaku: 0, // 默认关闭弹幕
+            autoplay: 0 // 默认不自动播放
+        };
+        
+        // 构建B站播放器URL
+        const buildVideoUrl = (config) => {
+            return `//player.bilibili.com/player.html?` + 
+                   `bvid=${config.bvid}&` +
+                   `page=${config.page}&` +
+                   `high_quality=${config.high_quality}&` +
+                   `danmaku=${config.danmaku}&` +
+                   `autoplay=${config.autoplay}`;
+        };
+        
+        const videoUrl = buildVideoUrl(videoConfig);
+        
         container.innerHTML = `
-            <iframe 
-                src="//player.bilibili.com/player.html?bvid=${bvid}&page=1" 
-                scrolling="no" 
-                border="0" 
-                frameborder="no" 
-                framespacing="0" 
-                allowfullscreen="true">
-            </iframe>
+            <div class="bilibili-player-wrapper">
+                <div class="bilibili-brand">B站视频</div>
+                <div class="video-loading" id="videoLoading">
+                    <i class="fas fa-spinner"></i>
+                    <span>正在加载视频...</span>
+                </div>
+                <iframe 
+                    src="${videoUrl}"
+                    scrolling="no" 
+                    border="0" 
+                    frameborder="no" 
+                    framespacing="0" 
+                    allowfullscreen="true"
+                    loading="lazy"
+                    onload="document.getElementById('videoLoading').style.display='none'">
+                </iframe>
+                <div class="video-controls">
+                    <button class="control-btn" onclick="toggleDanmaku('${bvid}')">
+                        <i class="fas fa-comment-dots"></i> <span id="danmakuText">开启弹幕</span>
+                    </button>
+                    <button class="control-btn" onclick="changeQuality('${bvid}')">
+                        <i class="fas fa-hd"></i> <span id="qualityText">高清</span>
+                    </button>
+                    <button class="control-btn" onclick="shareToBilibili('${bvid}')">
+                        <i class="fas fa-share-alt"></i> 分享
+                    </button>
+                    <button class="control-btn" onclick="window.open('https://www.bilibili.com/video/${bvid}', '_blank')">
+                        <i class="fas fa-external-link-alt"></i> 原站观看
+                    </button>
+                </div>
+            </div>
         `;
     }
 }
@@ -333,3 +428,47 @@ class RecipeManager {
 document.addEventListener('DOMContentLoaded', () => {
     window.recipeManager = new RecipeManager();
 });
+
+// 全局函数用于视频控制
+function toggleDanmaku(bvid) {
+    const danmakuBtn = document.getElementById('danmakuText');
+    const iframe = document.querySelector('.bilibili-player-wrapper iframe');
+    
+    if (danmakuBtn.textContent === '开启弹幕') {
+        danmakuBtn.textContent = '关闭弹幕';
+        iframe.src = iframe.src.replace('danmaku=0', 'danmaku=1');
+    } else {
+        danmakuBtn.textContent = '开启弹幕';
+        iframe.src = iframe.src.replace('danmaku=1', 'danmaku=0');
+    }
+}
+
+function changeQuality(bvid) {
+    const qualityBtn = document.getElementById('qualityText');
+    const iframe = document.querySelector('.bilibili-player-wrapper iframe');
+    
+    if (qualityBtn.textContent === '高清') {
+        qualityBtn.textContent = '标清';
+        iframe.src = iframe.src.replace('high_quality=1', 'high_quality=0');
+    } else {
+        qualityBtn.textContent = '高清';
+        iframe.src = iframe.src.replace('high_quality=0', 'high_quality=1');
+    }
+}
+
+function shareToBilibili(bvid) {
+    const shareUrl = `https://www.bilibili.com/video/${bvid}`;
+    if (navigator.share) {
+        navigator.share({
+            title: '推荐这个美食教程',
+            url: shareUrl
+        }).catch(console.error);
+    } else {
+        // 复制到剪贴板
+        navigator.clipboard.writeText(shareUrl).then(() => {
+            alert('链接已复制到剪贴板！');
+        }).catch(() => {
+            prompt('复制下面的链接分享:', shareUrl);
+        });
+    }
+}
