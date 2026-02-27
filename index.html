@@ -3,50 +3,87 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>我的小厨房</title>
+    <title>简易厨房 - 美味从这里开始</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-     
 <body>
-    <!-- 新增：动态背景元素 -->
-    <div class="body-bg-animation">
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-    </div>
-    
-    <div class="kitchen-container">
-        <header>
-            <h1>🍳 欢迎来到惬意的小厨房</h1>
-            <p>点击下方选择一道菜开始烹饪吧！</p>
+    <div class="app-container">
+        <!-- 顶部导航栏 -->
+        <header class="main-header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-utensils"></i>
+                    <h1>简易厨房</h1>
+                </div>
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="搜索菜谱...">
+                    <button id="searchBtn"><i class="fas fa-search"></i></button>
+                </div>
+                <nav class="nav-menu">
+                    <a href="#" class="nav-item active">首页</a>
+                    <a href="#" class="nav-item">热门</a>
+                    <a href="#" class="nav-item">分类</a>
+                </nav>
+            </div>
         </header>
 
-        <!-- 菜谱选择 -->
-        <section class="menu">
-            <button onclick="loadRecipe('ma_po_tofu')">麻婆豆腐</button>
-            <button onclick="loadRecipe('fried_egg')">煎鸡蛋</button>
-            <!-- 更多菜谱按钮可以在这里添加 -->
-        </section>
+        <!-- 主要内容区域 -->
+        <main class="main-content">
+            <!-- 菜谱分类导航 -->
+            <section class="category-nav">
+                <h2>菜谱分类</h2>
+                <div class="category-tags">
+                    <span class="tag active" data-category="all">全部</span>
+                    <span class="tag" data-category="hot">热门推荐</span>
+                    <span class="tag" data-category="simple">快手菜</span>
+                    <span class="tag" data-category="meat">肉类</span>
+                    <span class="tag" data-category="vegetable">蔬菜</span>
+                    <span class="tag" data-category="soup">汤羹</span>
+                    <span class="tag" data-category="dessert">甜品</span>
+                </div>
+            </section>
 
-        <!-- 虚拟操作台 -->
-        <section class="workbench" id="workbench">
-            <div class="ingredients-bin" id="ingredients"></div>
-            <div class="cooking-area" id="cookingArea">
-                <p>将食材拖到这里开始制作...</p>
-            </div>
-        </section>
+            <!-- 菜谱展示区 -->
+            <section class="recipes-grid" id="recipesGrid">
+                <!-- 菜谱卡片将通过JavaScript动态生成 -->
+            </section>
 
-        <!-- B站视频展示 -->
-        <section class="video-player" id="videoPlayer">
-            <!-- 视频将通过JS动态插入 -->
-        </section>
+            <!-- 详细制作区域 -->
+            <section class="recipe-detail" id="recipeDetail" style="display: none;">
+                <div class="detail-header">
+                    <button class="back-btn" id="backBtn">
+                        <i class="fas fa-arrow-left"></i> 返回
+                    </button>
+                    <h2 id="recipeTitle"></h2>
+                </div>
+                
+                <div class="detail-content">
+                    <!-- 食材清单 -->
+                    <div class="ingredients-section">
+                        <h3><i class="fas fa-carrot"></i> 所需食材</h3>
+                        <div class="ingredients-list" id="ingredientsList"></div>
+                    </div>
 
-        <!-- 步骤提示 -->
-        <section class="steps" id="steps"></section>
+                    <!-- 制作步骤 -->
+                    <div class="steps-section">
+                        <h3><i class="fas fa-list-ol"></i> 制作步骤</h3>
+                        <div class="steps-list" id="stepsList"></div>
+                    </div>
+
+                    <!-- 教学视频 -->
+                    <div class="video-section">
+                        <h3><i class="fas fa-video"></i> 教学视频</h3>
+                        <div class="video-container" id="videoContainer"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- 底部信息 -->
+        <footer class="main-footer">
+            <p>&copy; 2024 简易厨房 - 让烹饪变得更简单</p>
+        </footer>
     </div>
 
     <script src="script.js"></script>
