@@ -1,0 +1,100 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Microsoft YaHei", sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.kitchen-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    overflow: hidden;
+    padding: 20px;
+}
+
+header h1 {
+    color: #d32f2f;
+    text-align: center;
+}
+
+.menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.menu button {
+    padding: 10px 20px;
+    background: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.workbench {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.ingredients-bin {
+    background: #f0f0f0;
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    padding: 15px;
+    min-height: 150px;
+}
+
+.ingredients-bin .item {
+    background: #fff;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    cursor: grab;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.cooking-area {
+    background: #fff8e1;
+    border: 2px solid #ffd54f;
+    border-radius: 10px;
+    padding: 20px;
+    min-height: 200px;
+    text-align: center;
+    color: #5d4037;
+}
+
+.video-player {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.steps {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #333;
+}
+
+/* 手机端适配 */
+@media (max-width: 600px) {
+    .workbench {
+        grid-template-columns: 1fr;
+    }
+}
