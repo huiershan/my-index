@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>我的小厨房</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="kitchen-container">
+        <header>
+            <h1>🍳 欢迎来到小厨房</h1>
+            <p>点击下方选择一道菜开始烹饪吧！</p>
+        </header>
+
+        <!-- 菜谱选择 -->
+        <section class="menu">
+            <button onclick="loadRecipe('ma_po_tofu')">麻婆豆腐</button>
+            <button onclick="loadRecipe('fried_egg')">煎鸡蛋</button>
+            <!-- 更多菜谱按钮可以在这里添加 -->
+        </section>
+
+        <!-- 虚拟操作台 -->
+        <section class="workbench" id="workbench">
+            <div class="ingredients-bin" id="ingredients"></div>
+            <div class="cooking-area" id="cookingArea">
+                <p>将食材拖到这里开始制作...</p>
+            </div>
+        </section>
+
+        <!-- B站视频展示 -->
+        <section class="video-player" id="videoPlayer">
+            <!-- 视频将通过JS动态插入 -->
+        </section>
+
+        <!-- 步骤提示 -->
+        <section class="steps" id="steps"></section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
